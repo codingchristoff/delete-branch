@@ -1,6 +1,6 @@
 #!/bin/bash
 #####
-# V0.1.1
+# V0.1.2
 #####
 set -m
 
@@ -10,26 +10,26 @@ declare deleteLocalBranch=false
 declare deleteRemoteBranch=false
 
 deleteBranch() {
-	if [[ $1 == "" ]]; then
-		echo "please provide a branch to delete"
+	if [[ "$1" == "" ]]; then
+		echo "Please provide a branch to delete."
 		exit
 	fi
 
-	if [[ $deleteLocalBranch && $deleteRemoteBranch ]]; then
+	if [[ "$deleteLocalBranch" = true && "$deleteRemoteBranch" = true ]]; then
+		echo "1"
 		deleteLocal "$1"
 		deleteOrigin "$1"
 		exit
 	fi
 
-	if [[ $deleteRemoteBranch ]]; then
+	if [[ "$deleteRemoteBranch" = true ]]; then
+		echo "2"
 		deleteOrigin "$1"
 		exit
-	fi
-
-	if [[ $deleteLocalBranch ]]; then
+	fi	
+		echo "3"
 		deleteLocal "$1"
 		exit
-	fi
 }
 
 deleteLocal() {
@@ -60,4 +60,3 @@ done
 shift $((OPTIND - 1))
 
 deleteBranch "$1"
-exit
