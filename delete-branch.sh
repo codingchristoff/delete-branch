@@ -1,6 +1,6 @@
 #!/bin/bash
 #####
-# V0.1.2
+# V0.1.4
 #####
 set -m
 
@@ -16,18 +16,15 @@ deleteBranch() {
 	fi
 
 	if [[ "$deleteLocalBranch" = true && "$deleteRemoteBranch" = true ]]; then
-		echo "1"
 		deleteLocal "$1"
 		deleteOrigin "$1"
 		exit
 	fi
 
 	if [[ "$deleteRemoteBranch" = true ]]; then
-		echo "2"
 		deleteOrigin "$1"
 		exit
 	fi	
-		echo "3"
 		deleteLocal "$1"
 		exit
 }
@@ -42,7 +39,7 @@ deleteOrigin() {
 
 # ********** START ********** #
 # //Process options
-while getopts "rb:" opt; do
+while getopts ":br" opt; do
 	case $opt in
 	b) 
 		deleteLocalBranch=true
@@ -52,7 +49,10 @@ while getopts "rb:" opt; do
 		deleteRemoteBranch=true
 	;;
 	\?)
-		echo "Invalid option: -$OPTARG" >&2
+		echo "Please select an option:"
+		echo "-r delete remote only"
+		echo "-b delete remote and origin"
+		echo "no args to delete local only"
 		exit 1
 	;;
 	esac
